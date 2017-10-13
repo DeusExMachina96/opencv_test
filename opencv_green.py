@@ -2,8 +2,7 @@
 import cv2
 import numpy as np
 
-#now we set our upper and lower bounds for Hue, Saturation, and Value
-#in this case it's green, which has a pretty wide range
+#set our upper and lower bounds for Hue, Saturation, and Value
 lowerBound=np.array([33,80,40])
 upperBound=np.array([102,255,255])
 
@@ -32,11 +31,11 @@ while True:
 	#create the filter which creates the mask for green
 	mask=cv2.inRange(imgHSV,lowerBound,upperBound)
 	
-	#this is the morphology stuff
+	#morphology stuff
 	maskOpen=cv2.morphologyEx(mask,cv2.MORPH_OPEN,kernelOpen)
     	maskClose=cv2.morphologyEx(maskOpen,cv2.MORPH_CLOSE,kernelClose)
 	
-	#the 'final form' after cleaning up all the noise and dots, draw a contour
+	#the 'final form' 
 	maskFinal=maskClose
     	conts,h=cv2.findContours(maskFinal.copy(),cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
 	cv2.drawContours(img,conts,-1,(255,0,0),3)
